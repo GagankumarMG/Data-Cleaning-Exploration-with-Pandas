@@ -1,0 +1,21 @@
+CustomerID,Name,Age,Gender,City,SignupDate,PurchaseAmount,MembershipType
+1,Aarav Sharma,28,Male,Mumbai,2022-01-15,4500.50,Gold
+2,Diya Patel,,Female,Delhi,2022-02-20,3200.00,Silver
+3,Rohan Verma,35,Male,,15/03/2022,7800.75,Gold
+4,Ananya Iyer,22,Female,Bengaluru,2022-04-05,,Bronze
+5,Karan Mehta,twenty five,Male,Chennai,2022-05-12,2100.00,Silver
+6,Sneha Reddy,31,,Hyderabad,2022-06-18,5600.25,Gold
+7,Vikram Singh,-5,Male,Delhi,2022-07-22,3900.00,Bronze
+8,Priya Nair,27,Female,Mumbai,08/08/2022,"1,250.00",Silver
+9,Arjun Das,45,Male,Kolkata,2022-09-10,-450.00,Gold
+10,Meera Joshi,29,Female,Pune,2022-10-02,6700.00,
+1,Aarav Sharma,28,Male,Mumbai,2022-01-15,4500.50,Gold
+11,Rahul Gupta,200,Male,Bengaluru,2022-11-14,8900.00,Gold
+12,Kavya Menon,26,Female,Chennai,,3400.00,Bronze
+13,Siddharth Rao,38,male,Hyderabad,2022-12-01,5100.00,Silver
+14,Nisha Kapoor,33,female,delhi,2023-01-09,abc,Gold
+15,Aditya Bose,41,Male,Kolkata,2023-02-17,7200.00,Silver
+16,Tanvi Desai,,Female,Pune,05/03/2023,2800.50,Bronze
+17,Manish Kumar,30,Male,Mumbai,2023-04-21,4100.00,Gold
+8,Priya Nair,27,Female,Mumbai,08/08/2022,"1,250.00",Silver
+18,Ishita Ghosh,24,,bengaluru,2023-05-30,3300.00,Bronze
