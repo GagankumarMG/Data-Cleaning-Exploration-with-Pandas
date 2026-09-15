@@ -1,0 +1,295 @@
+
+=================================================================
+STEP 1 : LOADING THE DATASET
+=================================================================
+File 'customer_data.csv' loaded successfully.
+
+=================================================================
+STEP 2 : ORIGINAL DATASET (BEFORE CLEANING)
+=================================================================
+    CustomerID           Name          Age  Gender       City  SignupDate PurchaseAmount MembershipType
+0            1   Aarav Sharma           28    Male     Mumbai  2022-01-15        4500.50           Gold
+1            2     Diya Patel          NaN  Female      Delhi  2022-02-20        3200.00         Silver
+2            3    Rohan Verma           35    Male        NaN  15/03/2022        7800.75           Gold
+3            4    Ananya Iyer           22  Female  Bengaluru  2022-04-05            NaN         Bronze
+4            5    Karan Mehta  twenty five    Male    Chennai  2022-05-12        2100.00         Silver
+5            6    Sneha Reddy           31     NaN  Hyderabad  2022-06-18        5600.25           Gold
+6            7   Vikram Singh           -5    Male      Delhi  2022-07-22        3900.00         Bronze
+7            8     Priya Nair           27  Female     Mumbai  08/08/2022       1,250.00         Silver
+8            9      Arjun Das           45    Male    Kolkata  2022-09-10        -450.00           Gold
+9           10    Meera Joshi           29  Female       Pune  2022-10-02        6700.00            NaN
+10           1   Aarav Sharma           28    Male     Mumbai  2022-01-15        4500.50           Gold
+11          11    Rahul Gupta          200    Male  Bengaluru  2022-11-14        8900.00           Gold
+12          12    Kavya Menon           26  Female    Chennai         NaN        3400.00         Bronze
+13          13  Siddharth Rao           38    male  Hyderabad  2022-12-01        5100.00         Silver
+14          14   Nisha Kapoor           33  female      delhi  2023-01-09            abc           Gold
+15          15    Aditya Bose           41    Male    Kolkata  2023-02-17        7200.00         Silver
+16          16    Tanvi Desai          NaN  Female       Pune  05/03/2023        2800.50         Bronze
+17          17   Manish Kumar           30    Male     Mumbai  2023-04-21        4100.00           Gold
+18           8     Priya Nair           27  Female     Mumbai  08/08/2022       1,250.00         Silver
+19          18   Ishita Ghosh           24     NaN  bengaluru  2023-05-30        3300.00         Bronze
+
+=================================================================
+STEP 3 : SHAPE AND COLUMN INFORMATION
+=================================================================
+Number of rows    : 20
+Number of columns : 8
+Column names      : ['CustomerID', 'Name', 'Age', 'Gender', 'City', 'SignupDate', 'PurchaseAmount', 'MembershipType']
+
+--- Detailed column info (df.info()) ---
+<class 'pandas.DataFrame'>
+RangeIndex: 20 entries, 0 to 19
+Data columns (total 8 columns):
+ #   Column          Non-Null Count  Dtype
+---  ------          --------------  -----
+ 0   CustomerID      20 non-null     int64
+ 1   Name            20 non-null     str  
+ 2   Age             18 non-null     str  
+ 3   Gender          18 non-null     str  
+ 4   City            19 non-null     str  
+ 5   SignupDate      19 non-null     str  
+ 6   PurchaseAmount  19 non-null     str  
+ 7   MembershipType  19 non-null     str  
+dtypes: int64(1), str(7)
+memory usage: 1.4 KB
+
+--- Data types of each column ---
+CustomerID        int64
+Name                str
+Age                 str
+Gender              str
+City                str
+SignupDate          str
+PurchaseAmount      str
+MembershipType      str
+dtype: object
+
+=================================================================
+STEP 4 : CHECKING FOR MISSING VALUES (BEFORE CLEANING)
+=================================================================
+CustomerID        0
+Name              0
+Age               2
+Gender            2
+City              1
+SignupDate        1
+PurchaseAmount    1
+MembershipType    1
+dtype: int64
+
+Total missing values in the dataset: 8
+
+=================================================================
+STEP 5 : CHECKING FOR DUPLICATE RECORDS
+=================================================================
+Number of fully duplicated rows: 2
+
+These are the duplicated rows:
+    CustomerID          Name Age  Gender    City  SignupDate PurchaseAmount MembershipType
+0            1  Aarav Sharma  28    Male  Mumbai  2022-01-15        4500.50           Gold
+7            8    Priya Nair  27  Female  Mumbai  08/08/2022       1,250.00         Silver
+10           1  Aarav Sharma  28    Male  Mumbai  2022-01-15        4500.50           Gold
+18           8    Priya Nair  27  Female  Mumbai  08/08/2022       1,250.00         Silver
+
+=================================================================
+STEP 6 : IDENTIFYING INCORRECT DATA TYPES
+=================================================================
+Age            -> should be a number, but pandas read it as text
+PurchaseAmount -> should be a number, but pandas read it as text
+SignupDate     -> should be a date, but pandas read it as text
+
+Reason: these columns contain values like 'twenty five',
+'1,250.00' and 'abc', so pandas treats the whole column as text.
+
+=================================================================
+STEP 7 : CONVERTING NUMERIC COLUMNS
+=================================================================
+Age and PurchaseAmount converted to numeric.
+Text values like 'twenty five' and 'abc' became NaN (missing).
+
+Data types now:
+Age               float64
+PurchaseAmount    float64
+dtype: object
+
+=================================================================
+STEP 8 : HANDLING INVALID NUMERIC VALUES
+=================================================================
+Invalid ages found (below 0 or above 100): 2
+    CustomerID          Name    Age
+6            7  Vikram Singh   -5.0
+11          11   Rahul Gupta  200.0
+
+Invalid purchase amounts found (negative): 1
+   CustomerID       Name  PurchaseAmount
+8           9  Arjun Das          -450.0
+
+Invalid values replaced with NaN (they will be filled in Step 10).
+
+=================================================================
+STEP 9 : CONVERTING THE DATE COLUMN
+=================================================================
+SignupDate converted to datetime.
+New data type: datetime64[us]
+Missing dates (NaT) after conversion: 1
+
+First 5 signup dates:
+0   2022-01-15
+1   2022-02-20
+2   2022-03-15
+3   2022-04-05
+4   2022-05-12
+Name: SignupDate, dtype: datetime64[us]
+
+=================================================================
+STEP 10 : FILLING MISSING NUMERIC VALUES WITH THE MEDIAN
+=================================================================
+Missing Age values before filling            : 5
+Missing PurchaseAmount values before filling : 3
+
+Median Age            : 29.0
+Median PurchaseAmount : 4100.0
+
+Missing Age values after filling            : 0
+Missing PurchaseAmount values after filling  : 0
+
+=================================================================
+STEP 11 : FILLING MISSING CATEGORICAL VALUES
+=================================================================
+Text cleaned: extra spaces removed and capitalisation made consistent.
+Most common MembershipType (mode): Gold
+
+Missing values in categorical columns now:
+Gender            0
+City              0
+MembershipType    0
+dtype: int64
+
+=================================================================
+STEP 12 : REMOVING DUPLICATE RECORDS
+=================================================================
+Rows before removing duplicates : 20
+Rows after removing duplicates  : 18
+Duplicate rows removed          : 2
+
+=================================================================
+STEP 13 : BEFORE AND AFTER COMPARISON
+=================================================================
+                         Before Cleaning  After Cleaning
+Total rows                            20              18
+Total missing values                   8               1
+Duplicate rows                         2               0
+Age data type                        str           int64
+PurchaseAmount data type             str         float64
+SignupDate data type                 str  datetime64[us]
+
+=================================================================
+STEP 14 : CLEANED DATASET (AFTER CLEANING)
+=================================================================
+    CustomerID           Name  Age   Gender       City SignupDate  PurchaseAmount MembershipType
+0            1   Aarav Sharma   28     Male     Mumbai 2022-01-15         4500.50           Gold
+1            2     Diya Patel   29   Female      Delhi 2022-02-20         3200.00         Silver
+2            3    Rohan Verma   35     Male    Unknown 2022-03-15         7800.75           Gold
+3            4    Ananya Iyer   22   Female  Bengaluru 2022-04-05         4100.00         Bronze
+4            5    Karan Mehta   29     Male    Chennai 2022-05-12         2100.00         Silver
+5            6    Sneha Reddy   31  Unknown  Hyderabad 2022-06-18         5600.25           Gold
+6            7   Vikram Singh   29     Male      Delhi 2022-07-22         3900.00         Bronze
+7            8     Priya Nair   27   Female     Mumbai 2022-08-08         1250.00         Silver
+8            9      Arjun Das   45     Male    Kolkata 2022-09-10         4100.00           Gold
+9           10    Meera Joshi   29   Female       Pune 2022-10-02         6700.00           Gold
+10          11    Rahul Gupta   29     Male  Bengaluru 2022-11-14         8900.00           Gold
+11          12    Kavya Menon   26   Female    Chennai        NaT         3400.00         Bronze
+12          13  Siddharth Rao   38     Male  Hyderabad 2022-12-01         5100.00         Silver
+13          14   Nisha Kapoor   33   Female      Delhi 2023-01-09         4100.00           Gold
+14          15    Aditya Bose   41     Male    Kolkata 2023-02-17         7200.00         Silver
+15          16    Tanvi Desai   29   Female       Pune 2023-03-05         2800.50         Bronze
+16          17   Manish Kumar   30     Male     Mumbai 2023-04-21         4100.00           Gold
+17          18   Ishita Ghosh   24  Unknown  Bengaluru 2023-05-30         3300.00         Bronze
+
+=================================================================
+STEP 15 : BASIC STATISTICAL ANALYSIS
+=================================================================
+
+--- Statistics for Age ---
+Mean               : 30.78
+Median             : 29.00
+Minimum            : 22.00
+Maximum            : 45.00
+Standard deviation : 5.79
+
+--- Statistics for PurchaseAmount ---
+Mean               : 4564.00
+Median             : 4100.00
+Minimum            : 1250.00
+Maximum            : 8900.00
+Standard deviation : 2006.35
+
+--- Full summary using describe() ---
+             Age  PurchaseAmount
+count  18.000000       18.000000
+mean   30.777778     4564.000000
+std     5.785942     2006.351285
+min    22.000000     1250.000000
+25%    28.250000     3325.000000
+50%    29.000000     4100.000000
+75%    32.500000     5475.187500
+max    45.000000     8900.000000
+
+=================================================================
+STEP 16 : CATEGORICAL ANALYSIS
+=================================================================
+--- Gender distribution ---
+Gender
+Male       9
+Female     7
+Unknown    2
+Name: count, dtype: int64
+
+--- Gender distribution in percentage ---
+Gender
+Male       50.00
+Female     38.89
+Unknown    11.11
+Name: proportion, dtype: float64
+
+--- City distribution ---
+City
+Mumbai       3
+Delhi        3
+Bengaluru    3
+Chennai      2
+Hyderabad    2
+Kolkata      2
+Pune         2
+Unknown      1
+Name: count, dtype: int64
+
+--- Membership type distribution ---
+MembershipType
+Gold      8
+Silver    5
+Bronze    5
+Name: count, dtype: int64
+
+--- Average purchase amount by membership type ---
+MembershipType
+Gold      5725.19
+Silver    3770.00
+Bronze    3500.10
+Name: PurchaseAmount, dtype: float64
+
+--- Number of customers who signed up each year ---
+SignupDate
+2022    12
+2023     5
+Name: count, dtype: int64
+
+=================================================================
+STEP 17 : SAVING THE CLEANED DATASET
+=================================================================
+Cleaned dataset saved successfully as 'cleaned_customer_data.csv'
+Location: /home/claude/data-cleaning-project/cleaned_customer_data.csv
+
+=================================================================
+DATA CLEANING COMPLETED SUCCESSFULLY
+=================================================================
